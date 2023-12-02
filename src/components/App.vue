@@ -100,7 +100,6 @@ export default {
       filters,
       todos,
       allChecked,
-      reverseChecked,
       filteredTodos,
       remaining,
       addTodo,
