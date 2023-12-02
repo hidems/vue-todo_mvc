@@ -9,7 +9,9 @@
         autofocus
         autocomplete="off"
         placeholder="What needs to be done?"
-        @keyup.enter="addTodo">
+        v-model="inputText"
+        @keyup.enter="addTodo(inputText)">
+      <button @click="addTodo(inputText)">Add</button>
     </header>
     <!-- main section -->
     <section class="main" v-show="todos.length">
@@ -63,6 +65,7 @@ export default {
   components: { TodoItem },
   setup () {
     const visibility = ref('all')
+    const inputText = ref('')
 
     const store = useStore()
 
@@ -74,12 +77,12 @@ export default {
     const toggleAll = (done) => store.dispatch('toggleAll', done)
     const clearCompleted = () => store.dispatch('clearCompleted')
 
-    function addTodo (e) {
-      const text = e.target.value
+    function addTodo(input) {
+      const text = input
       if (text.trim()) {
         store.dispatch('addTodo', text)
       }
-      e.target.value = ''
+      this.inputText = ''
     }
 
     const pluralize = (n, w) => n === 1 ? w : (w + 's')
@@ -87,6 +90,7 @@ export default {
 
     return {
       visibility,
+      inputText,
       filters,
       todos,
       allChecked,
