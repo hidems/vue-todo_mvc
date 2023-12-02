@@ -13,13 +13,18 @@
         @keyup.enter="addTodo(inputText)">
       <button @click="addTodo(inputText)">Add</button>
     </header>
+
     <!-- main section -->
     <section class="main" v-show="todos.length">
+      <!-- Special checkbox -->
       <input class="toggle-all" id="toggle-all"
         type="checkbox"
         :checked="allChecked"
-        @change="toggleAll(!allChecked)">
-      <label for="toggle-all"></label>
+        @change="toggleAll(!allChecked)"
+      >
+      <label for="toggle-all">Toggle All</label>
+
+      <!-- todo list -->
       <ul class="todo-list">
         <TodoItem
           v-for="(todo, index) in filteredTodos"
@@ -28,6 +33,7 @@
         />
       </ul>
     </section>
+
     <!-- footer -->
     <footer class="footer" v-show="todos.length">
       <span class="todo-count">
@@ -94,6 +100,7 @@ export default {
       filters,
       todos,
       allChecked,
+      reverseChecked,
       filteredTodos,
       remaining,
       addTodo,
