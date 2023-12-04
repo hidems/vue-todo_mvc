@@ -6,7 +6,19 @@
         :checked="todo.done"
         @change="toggleTodo(todo)">
       <label v-text="todo.text" @dblclick="editing = true"></label>
-      <button class="destroy" @click="removeTodo(todo)">delete</button>
+      <button
+        class="destroy"
+        @click="removeTodo(todo)"
+        v-show="!editing"
+      >
+        delete
+      </button>
+      <button
+        class="Save"
+        v-show="editing"
+      >
+        Save
+      </button>
     </div>
     <input class="edit"
       v-show="editing"
@@ -50,7 +62,9 @@ export default {
       editing.value = false
     }
 
-    function cancelEdit (e) {
+    function cancelEdit(e) {
+      console.log('cancelEdit')
+      console.log(e)
       e.target.value = props.todo.text
       editing.value = false
     }
