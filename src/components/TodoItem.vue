@@ -19,6 +19,9 @@
       >
         Save
       </button>
+      <font-awesome-icon icon="fa-solid fa-user-secret" />
+      <font-awesome-icon icon="fa-solid fa-star" />
+
     </div>
     <input class="edit"
       v-show="editing"

@@ -27,3 +27,7 @@ npm run dev
 ```sh
 npm run build
 ```
+
+## Packages
+### Fontawesome
+https://fontawesome.com/docs/web/use-with/vue/add-icons

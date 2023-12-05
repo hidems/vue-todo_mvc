@@ -2,6 +2,7 @@ export default {
   addTodo({ commit }, text) {
     commit('addTodo', {
       text,
+      star: false,
       done: false
     })
   },
