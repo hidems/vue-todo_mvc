@@ -6,6 +6,12 @@
         :checked="todo.done"
         @change="toggleTodo(todo)">
       <label v-text="todo.text" @dblclick="editing = true"></label>
+
+      <span class="star" @click="toggleStar(todo)">
+        <font-awesome-icon icon="fa-solid fa-star" v-show="todo.star" />
+        <font-awesome-icon icon="fa-regular fa-star" v-show="!todo.star" />
+      </span>
+
       <button
         class="destroy"
         @click="removeTodo(todo)"
@@ -19,10 +25,7 @@
       >
         Save
       </button>
-      <font-awesome-icon icon="fa-solid fa-star" />
-      <font-awesome-icon icon="fa-regular fa-star" />
-      <font-awesome-icon icon="fa-solid fa-star" spin/>
-
+      
     </div>
     <input class="edit"
       v-show="editing"
@@ -54,6 +57,7 @@ export default {
 
     const editTodo = (todo, value) => store.dispatch('editTodo', { todo, value })
     const toggleTodo = (todo) => store.dispatch('toggleTodo', todo)
+    const toggleStar = (todo) => store.dispatch('toggleStar', todo)
     const removeTodo = (todo) => store.dispatch('removeTodo', todo)
 
     function doneEdit (e) {
@@ -77,6 +81,7 @@ export default {
       input,
       editing,
       toggleTodo,
+      toggleStar,
       doneEdit,
       cancelEdit,
       removeTodo

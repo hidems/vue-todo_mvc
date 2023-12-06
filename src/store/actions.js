@@ -2,8 +2,9 @@ export default {
   addTodo({ commit }, text) {
     commit('addTodo', {
       text,
-      star: false,
-      done: false
+      done: false,
+      star: false
+
     })
   },
 
@@ -13,6 +14,10 @@ export default {
 
   toggleTodo({ commit }, todo) {
     commit('editTodo', { todo, done: !todo.done })
+  },
+
+  toggleStar({ commit }, todo) {
+    commit('editTodo', { todo, star: !todo.star })
   },
 
   editTodo({ commit }, { todo, value }) {

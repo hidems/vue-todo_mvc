@@ -12,6 +12,7 @@
         v-model="inputText"
         @keyup.enter="addTodo(inputText)">
       <button @click="addTodo(inputText)">Add</button>
+      <font-awesome-icon icon="fa-regular fa-star" spin/>
     </header>
 
     <!-- main section -->
