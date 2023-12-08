@@ -7,10 +7,13 @@
         @change="toggleTodo(todo)">
       <label v-text="todo.text" @dblclick="editing = true"></label>
 
-      <span class="star" @click="toggleStar(todo)">
-        <font-awesome-icon icon="fa-solid fa-star" v-show="todo.star" />
-        <font-awesome-icon icon="fa-regular fa-star" v-show="!todo.star" />
-      </span>
+      <!-- Star -->
+      <font-awesome-icon
+        :icon="starIcon"
+        :spin="spin"
+        @click="toggleStar(todo)"
+        @dblclick="spinStar"
+      />
 
       <button
         class="destroy"
@@ -38,7 +41,7 @@
 </template>
 
 <script>
-import { ref, watch, nextTick } from 'vue'
+import { ref, watch, nextTick, computed } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
@@ -46,8 +49,14 @@ export default {
   props: ['todo'],
   setup (props) {
     const input = ref(null)
-
     const editing = ref(false)
+    const spin = ref(false)
+
+    const starIcon = computed(() => {
+      return props.todo.star
+        ? 'fa-solid fa-star'
+        : 'fa-regular fa-star'
+    })
 
     watch(editing, (v) => {
       v && nextTick(() => { input.value.focus() })
@@ -58,6 +67,7 @@ export default {
     const editTodo = (todo, value) => store.dispatch('editTodo', { todo, value })
     const toggleTodo = (todo) => store.dispatch('toggleTodo', todo)
     const toggleStar = (todo) => store.dispatch('toggleStar', todo)
+    const spinStar = () => spin.value = !spin.value
     const removeTodo = (todo) => store.dispatch('removeTodo', todo)
 
     function doneEdit (e) {
@@ -80,8 +90,11 @@ export default {
     return {
       input,
       editing,
+      spin,
+      starIcon,
       toggleTodo,
       toggleStar,
+      spinStar,
       doneEdit,
       cancelEdit,
       removeTodo
