@@ -37,22 +37,33 @@
 
     <!-- footer -->
     <footer class="footer" v-show="todos.length">
-      <span class="todo-count">
-        <strong>{{ remaining }}</strong>
-        {{ pluralize(remaining, 'ToDo item') }} left
-      </span>
-      <ul class="filters">
-        <li v-for="(val, key) in filters">
-          <a :href="'#/' + key"
-            :class="{ selected: visibility === key }"
-            @click="visibility = key">{{ capitalize(key) }}</a>
-        </li>
-      </ul>
-      <button class="clear-completed"
-        v-show="todos.length > remaining"
-        @click="clearCompleted">
-        Clear completed
-      </button>
+      <!-- Todo count -->
+      <div>
+        <span class="todo-count">
+          <strong>{{ remaining }}</strong>
+          {{ pluralize(remaining, 'ToDo item') }} left
+        </span>
+        <ul class="filters">
+          <li v-for="(val, key) in filters">
+            <a :href="'#/' + key"
+              :class="{ selected: visibility === key }"
+              @click="visibility = key">{{ capitalize(key) }}</a>
+          </li>
+        </ul>
+        <button class="clear-completed"
+          v-show="todos.length > remaining"
+          @click="clearCompleted">
+          Clear completed
+        </button>
+      </div>
+
+      <!-- Star count -->
+      <div>
+        <span class="star-count">
+          <strong>{{ starCount }}</strong>{{ pluralize(starCount, ' Star') }}
+        </span>
+
+      </div>
     </footer>
   </section>
 </template>
@@ -81,6 +92,8 @@ export default {
     const filteredTodos = computed(() => filters[visibility.value](todos.value))
     const remaining = computed(() => todos.value.filter(todo => !todo.done).length)
 
+    const starCount = computed(() => todos.value.filter(todo => todo.star).length)
+
     const toggleAll = (done) => store.dispatch('toggleAll', done)
     const clearCompleted = () => store.dispatch('clearCompleted')
 
@@ -103,6 +116,7 @@ export default {
       allChecked,
       filteredTodos,
       remaining,
+      starCount,
       addTodo,
       clearCompleted,
       toggleAll,
