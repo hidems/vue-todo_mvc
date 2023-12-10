@@ -12,7 +12,6 @@
         v-model="inputText"
         @keyup.enter="addTodo(inputText)">
       <button @click="addTodo(inputText)">Add</button>
-      <font-awesome-icon icon="fa-regular fa-star" spin/>
     </header>
 
     <!-- main section -->
@@ -60,7 +59,14 @@
       <!-- Star count -->
       <div>
         <span class="star-count">
-          <strong>{{ starCount }}</strong>{{ pluralize(starCount, ' Star') }}
+          <strong>{{ starCount }}</strong>
+          {{ pluralize(starCount, 'Star') }}
+          <font-awesome-icon
+            v-for="i in starCount"
+            :key="i"
+            icon="fa-solid fa-star"
+            spin
+          />
         </span>
 
       </div>
