@@ -68,6 +68,12 @@
             spin
           />
         </span>
+        <div class="star-filters">
+          <button @click="createStarList">Star List</button>
+          <ul v-show="showStarItems">
+            <li v-for="(todo, index) in starItems" :key="index">{{ todo.text }}</li>
+          </ul>
+        </div>
 
       </div>
     </footer>
@@ -90,8 +96,9 @@ export default {
   setup () {
     const visibility = ref('all')
     const inputText = ref('')
-
     const store = useStore()
+    const showStarItems = ref(false)
+    const starItems = ref('')
 
     const todos = computed(() => store.state.todos)
     const allChecked = computed(() => todos.value.every(todo => todo.done))
@@ -111,12 +118,21 @@ export default {
       this.inputText = ''
     }
 
+    function createStarList() {
+      this.showStarItems = !this.showStarItems
+      if (this.showStarItems) {
+        this.starItems = this.todos.filter(todo => todo.star)
+      }
+    }
+
     const pluralize = (n, w) => n === 1 ? w : (w + 's')
     const capitalize = s => s.charAt(0).toUpperCase() + s.slice(1)
 
     return {
       visibility,
       inputText,
+      showStarItems,
+      starItems,
       filters,
       todos,
       allChecked,
@@ -124,6 +140,7 @@ export default {
       remaining,
       starCount,
       addTodo,
+      createStarList,
       clearCompleted,
       toggleAll,
       pluralize,
